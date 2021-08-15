@@ -8,6 +8,7 @@ class Nutritionix:
         self.endpoint = NUTRITIONIX_ENDPOINT
         self.api_key = NUTRITIONIX_API_KEY
         self.app_id = NUTRITIONIX_APP_ID
+        self.exercise_data = dict()
 
     def send_query(self, weight, age, gender="male", height=167.64):
         headers = {
@@ -27,4 +28,17 @@ class Nutritionix:
             json=parameters,
             headers=headers
         )
-        return response.text
+        self.exercise_data = response.json()
+
+    def clean_data(self):
+        exercise_list = self.exercise_data["exercises"]
+        exercise_list_cleaned = list()
+        for exercise in exercise_list:
+            exercise_tasks = dict()
+            exercise_tasks["duration_min"] = exercise["duration_min"]
+            exercise_tasks["nf_calories"] = exercise["nf_calories"]
+            exercise_tasks["name"] = exercise["name"]
+            exercise_list_cleaned.append(exercise_tasks)
+        return exercise_list_cleaned
+
+
