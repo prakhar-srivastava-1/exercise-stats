@@ -1,6 +1,6 @@
-from nutritionix import Nutritionix
 import datetime as dt
 from google_sheets import GoogleSheets
+from nutritionix import Nutritionix
 
 # add a call to Nutritionix to get info from API
 nutritionix = Nutritionix()
@@ -35,3 +35,5 @@ if google.write_new_stats(entries=entries):
     print("New stats successfully added!")
 else:
     print("Error! Something went wrong.")
+
+# print(os.environ.get("GOOGLE_API_KEY"))

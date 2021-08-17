@@ -1,7 +1,7 @@
 import requests
-from secrets import GOOGLE_API_KEY, SPREADSHEET_ENDPOINT, SPREADSHEET_ID
+import os
+from secrets import SPREADSHEET_ENDPOINT, SPREADSHEET_ID
 from googleapiclient.discovery import build
-from google.oauth2 import service_account
 
 SPREADSHEET_RANGE = "A1:E"
 
@@ -12,10 +12,11 @@ class GoogleSheets:
         self.endpoint_get = SPREADSHEET_ENDPOINT + SPREADSHEET_RANGE
         self.endpoint_put = SPREADSHEET_ENDPOINT
         self.max_row = 0
+        self.google_api_key = os.environ.get("GOOGLE_API_KEY")
 
     def get_current_rows(self):
         parameters = {
-            "key": GOOGLE_API_KEY
+            "key": self.google_api_key
         }
         response = requests.get(
             url=self.endpoint_get,
@@ -26,17 +27,8 @@ class GoogleSheets:
         self.max_row = len(response.json()["values"])
 
     def write_new_stats(self, entries):
-        scopes = ['https://www.googleapis.com/auth/spreadsheets']
-        service_account_file = 'keys.json'
-
-        # Create credentials for REST call
-        creds = service_account.Credentials.from_service_account_file(
-            service_account_file,
-            scopes=scopes
-        )
-
         # Build the service object
-        service = build('sheets', 'v4', credentials=creds)
+        service = build('sheets', 'v4')
         # Call the Sheets API
         sheet = service.spreadsheets()
 

@@ -1,4 +1,5 @@
-import requests, os
+import requests
+import os
 from secrets import NUTRITIONIX_ENDPOINT
 
 
