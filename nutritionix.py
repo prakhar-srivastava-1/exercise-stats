@@ -1,13 +1,13 @@
-import requests
-from secrets import NUTRITIONIX_API_KEY, NUTRITIONIX_APP_ID, NUTRITIONIX_ENDPOINT
+import requests, os
+from secrets import NUTRITIONIX_ENDPOINT
 
 
 class Nutritionix:
 
     def __init__(self):
         self.endpoint = NUTRITIONIX_ENDPOINT
-        self.api_key = NUTRITIONIX_API_KEY
-        self.app_id = NUTRITIONIX_APP_ID
+        self.api_key = os.environ.get("NUTRITIONIX_API_KEY")
+        self.app_id = os.environ.get("NUTRITIONIX_APP_ID")
         self.exercise_data = dict()
 
     def send_query(self, weight, age, gender="male", height=167.64):
