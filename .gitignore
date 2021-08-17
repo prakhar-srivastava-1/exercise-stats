@@ -147,3 +147,6 @@ cython_debug/
 
 secrets.py
 secrets.py
+quickstart.py
+client_secret.json
+keys.json
