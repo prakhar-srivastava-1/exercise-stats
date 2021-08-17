@@ -22,7 +22,7 @@ class GoogleSheets:
             params=parameters,
         )
         response.raise_for_status()
-        print(len(response.json()["values"]))
+        # print(len(response.json()["values"]))
         self.max_row = len(response.json()["values"])
 
     def write_new_stats(self, entries):
